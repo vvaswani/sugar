@@ -16,7 +16,7 @@ services:
       AWS_ACCESS_KEY_ID: ${MINIO_ROOT_USER}
       AWS_SECRET_ACCESS_KEY: ${MINIO_ROOT_PASSWORD}
       AWS_REGION: us-east-1
-      AWS_BUCKET: app
+      AWS_BUCKET: sugar
       AWS_ENDPOINT: http://objectstore:9000
       MESSENGER_TRANSPORT_DSN: redis://queue:6379/messages
     ports:
@@ -27,10 +27,10 @@ services:
       - queue
       - objectstore
 
-  worker:
+  reporter:
     build:
       context: ./api
-      dockerfile: Dockerfile.worker
+      dockerfile: Dockerfile.worker.reporter
     volumes:
       - ./api:/var/www/html
     environment:
@@ -40,7 +40,7 @@ services:
       AWS_ACCESS_KEY_ID: ${MINIO_ROOT_USER}
       AWS_SECRET_ACCESS_KEY: ${MINIO_ROOT_PASSWORD}
       AWS_REGION: us-east-1
-      AWS_BUCKET: app
+      AWS_BUCKET: sugar
       AWS_ENDPOINT: http://objectstore:9000
     restart: always
     depends_on:
@@ -91,9 +91,9 @@ services:
     volumes:
       - minio_data:/data
     environment:
-      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
-      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
-      MINIO_BUCKETS: app
+      MINIO_ROOT_USER: "${MINIO_ROOT_USER}"
+      MINIO_ROOT_PASSWORD: "${MINIO_ROOT_PASSWORD}"
+      MINIO_BUCKETS: sugar
     command: server /data --console-address ":10001"
 
   web:

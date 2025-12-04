@@ -10,9 +10,13 @@ framework:
             # sync: 'sync://'
             async_reports:
               dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+            schedule:
+              dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
 
         routing:
-            'App\Message\GenerateReportMessage': async_reports
+            App\Message\ReportMessage: async_reports
+            App\Message\DailyReportTriggerMessage: schedule
+            App\Message\WeeklyReportTriggerMessage: schedule
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
 

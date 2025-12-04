@@ -29,4 +29,4 @@ COPY docker-entrypoint.worker.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint
 
 ENTRYPOINT ["docker-entrypoint"]
-CMD ["php", "bin/console", "messenger:consume", "async_reports", "-vv"]
+CMD ["php", "bin/console", "messenger:consume", "async_reports", "schedule", "-vv"]

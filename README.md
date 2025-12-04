@@ -25,5 +25,6 @@ USER_EMAIL=user@example.com php bin/console doctrine:fixtures:load # purge and a
 or
 USER_EMAIL=user@example.com php bin/console doctrine:fixtures:load --append # only add
 
-### run worker
-php bin/console messenger:consume async_reports -vv
+### run workers
+php bin/console messenger:consume reports -vv
+php bin/console messenger:consume schedule -vv

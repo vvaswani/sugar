@@ -13,6 +13,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.7",
         "doctrine/orm": "^3.5",
         "dompdf/dompdf": "^3.1",
+        "dragonmantank/cron-expression": "^3.6",
         "knpuniversity/oauth2-client-bundle": "^2.19",
         "league/flysystem-aws-s3-v3": "^3.29",
         "league/oauth2-google": "^4.0",
@@ -57,7 +58,12 @@
             "symfony/flex": true,
             "symfony/runtime": true
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "audit": {
+            "ignore": [
+                "PKSA-365x-2zjk-pt47"
+            ]
+        }
     },
     "autoload": {
         "psr-4": {

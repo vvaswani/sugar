@@ -1,5 +1,4 @@
 <?php
-// src/MessageHandler/GenerateReportMessageHandler.php
 namespace App\MessageHandler;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,13 +11,13 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use Twig\Environment as TwigEnvironment;
 use Aws\S3\S3Client;
-use App\Message\GenerateReportMessage;
+use App\Message\ReportMessage;
 use App\Entity\Report;
 use App\Entity\Reading;
 use App\Entity\User;
 
 #[AsMessageHandler]
-class GenerateReportMessageHandler
+class ReportMessageHandler
 {
     public function __construct(
         private EntityManagerInterface $em,
@@ -29,16 +28,16 @@ class GenerateReportMessageHandler
         private S3Client $s3Client
     ) {}
 
-    public function __invoke(GenerateReportMessage $message): void
+    public function __invoke(ReportMessage $message): void
     {
         $userId = $message->getUserId();
         $startDate = $message->getStartDate();
         $endDate = $message->getEndDate();
         $reportType = $message->getReportType();
 
-        if ($reportType === GenerateReportMessage::TYPE_WEEKLY) {
+        if ($reportType === ReportMessage::TYPE_WEEKLY) {
             $this->generateWeeklyReport($userId, $startDate, $endDate);
-        } elseif ($reportType === GenerateReportMessage::TYPE_DAILY) {
+        } elseif ($reportType === ReportMessage::TYPE_DAILY) {
             $this->generateDailyReport($userId, $startDate, $endDate);
         }
     }
