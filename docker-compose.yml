@@ -21,6 +21,7 @@ services:
       MESSENGER_TRANSPORT_DSN: redis://queue:6379/messages
     ports:
       - "9000:9000"
+    restart: always
     depends_on:
       - database
       - queue
@@ -60,6 +61,7 @@ services:
     command: ["/bin/sh", "-c", "/start.sh"]
     depends_on:
       - api
+      - web
 
   database:
     image: postgres:${POSTGRES_VERSION:-16}-alpine

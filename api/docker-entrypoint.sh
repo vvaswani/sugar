@@ -1,6 +1,7 @@
 #!/bin/sh
 set -e
 
+
 # uncomment only when php-fpm and nginx in the same container
 # nginx
 
@@ -39,10 +40,10 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 	composer install --prefer-dist --no-progress --no-interaction
 
 	# Wait for db to be ready
-	until bin/console doctrine:query:sql "SELECT 1" > /dev/null 2>&1; do
-		echo "Waiting for db to be ready..."
-		sleep 2
-	done
+  until php wait-for-db.php; do
+      echo 'Waiting for DB...'
+      sleep 2
+  done
 
 	# Run migrations
 	bin/console doctrine:migrations:migrate --no-interaction

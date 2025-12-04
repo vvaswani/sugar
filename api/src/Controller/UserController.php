@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class UserController extends AbstractController
@@ -21,7 +21,7 @@ class UserController extends AbstractController
         $this->em = $em;
     }
 
-    #[Route(path: '/connect/google', name: 'connect_google')]
+    #[Route('/connect/google', name: 'connect_google')]
     public function connectGoogle(ClientRegistry $clientRegistry): RedirectResponse
     {
         return $clientRegistry->getClient('google')->redirect(
@@ -30,7 +30,7 @@ class UserController extends AbstractController
         );
     }
 
-    #[Route(path: '/connect/google/check', name: 'connect_google_check')]
+    #[Route('/connect/google/check', name: 'connect_google_check')]
     public function connectCheck(): RedirectResponse
     {
         $redirectUrl = $_ENV['FRONTEND_URL'];
