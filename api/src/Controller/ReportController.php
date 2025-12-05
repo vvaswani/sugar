@@ -21,7 +21,7 @@ use Psr\Log\LoggerInterface;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use App\Repository\ReportRepository;
-use App\Message\GenerateReportMessage;
+use App\Message\GenerateUserReportMessage;
 use App\Entity\Reading;
 use App\Entity\Report;
 use App\Entity\User;
@@ -66,7 +66,7 @@ class ReportController extends AbstractController
             $utcEnd = (clone $localEnd)->setTimezone(new \DateTimeZone('UTC'));
 
             // Dispatch message with the UTC date range
-            $bus->dispatch(new GenerateReportMessage($user->getId(), $utcStart, $utcEnd, GenerateReportMessage::TYPE_DAILY));
+            $bus->dispatch(new GenerateUserReportMessage($user->getId(), $utcStart, $utcEnd, GenerateUserReportMessage::TYPE_DAILY));
         }
 
         return new Response('Daily reports enqueued.');
@@ -97,11 +97,11 @@ class ReportController extends AbstractController
             $utcStart = (clone $localStart)->setTimezone(new \DateTimeZone('UTC'));
             $utcEnd = (clone $localEnd)->setTimezone(new \DateTimeZone('UTC'));
 
-            $bus->dispatch(new GenerateReportMessage(
+            $bus->dispatch(new GenerateUserReportMessage(
                 $user->getId(),
                 $utcStart,
                 $utcEnd,
-                GenerateReportMessage::TYPE_WEEKLY
+                GenerateUserReportMessage::TYPE_WEEKLY
             ));
         }
 

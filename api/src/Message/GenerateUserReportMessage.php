@@ -1,7 +1,7 @@
 <?php
 namespace App\Message;
 
-class ReportMessage
+class GenerateUserReportMessage
 {
     public const TYPE_DAILY = 'daily';
     public const TYPE_WEEKLY = 'weekly';

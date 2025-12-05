@@ -27,10 +27,10 @@ services:
       - queue
       - objectstore
 
-  reporter:
+  worker:
     build:
       context: ./api
-      dockerfile: Dockerfile.worker.reporter
+      dockerfile: Dockerfile.worker
     volumes:
       - ./api:/var/www/html
     environment:
@@ -48,7 +48,6 @@ services:
       - queue
       - objectstore
 
-
   proxy:
     build:
       context: ./proxy
@@ -61,7 +60,6 @@ services:
     command: ["/bin/sh", "-c", "/start.sh"]
     depends_on:
       - api
-      - web
 
   database:
     image: postgres:${POSTGRES_VERSION:-16}-alpine

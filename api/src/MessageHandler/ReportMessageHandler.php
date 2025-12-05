@@ -11,13 +11,13 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use Twig\Environment as TwigEnvironment;
 use Aws\S3\S3Client;
-use App\Message\ReportMessage;
+use App\Message\GenerateUserReportMessage;
 use App\Entity\Report;
 use App\Entity\Reading;
 use App\Entity\User;
 
 #[AsMessageHandler]
-class ReportMessageHandler
+class GenerateUserReportMessageHandler
 {
     public function __construct(
         private EntityManagerInterface $em,
@@ -28,16 +28,16 @@ class ReportMessageHandler
         private S3Client $s3Client
     ) {}
 
-    public function __invoke(ReportMessage $message): void
+    public function __invoke(GenerateUserReportMessage $message): void
     {
         $userId = $message->getUserId();
         $startDate = $message->getStartDate();
         $endDate = $message->getEndDate();
         $reportType = $message->getReportType();
 
-        if ($reportType === ReportMessage::TYPE_WEEKLY) {
+        if ($reportType === GenerateUserReportMessage::TYPE_WEEKLY) {
             $this->generateWeeklyReport($userId, $startDate, $endDate);
-        } elseif ($reportType === ReportMessage::TYPE_DAILY) {
+        } elseif ($reportType === GenerateUserReportMessage::TYPE_DAILY) {
             $this->generateDailyReport($userId, $startDate, $endDate);
         }
     }

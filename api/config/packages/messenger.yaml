@@ -12,7 +12,7 @@ framework:
               dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
 
         routing:
-            App\Message\ReportMessage: async_reports
+            App\Message\GenerateUserReportMessage: async_reports
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
 

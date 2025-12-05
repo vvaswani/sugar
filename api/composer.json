@@ -32,6 +32,7 @@
         "symfony/property-info": "8.0.*",
         "symfony/redis-messenger": "8.0.*",
         "symfony/runtime": "8.0.*",
+        "symfony/scheduler": "8.0.*",
         "symfony/security-bundle": "8.0.*",
         "symfony/security-core": "8.0.*",
         "symfony/security-http": "8.0.*",

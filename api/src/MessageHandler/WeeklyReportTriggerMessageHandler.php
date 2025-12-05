@@ -8,7 +8,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Psr\Log\LoggerInterface;
 use App\Entity\User;
 use App\Message\WeeklyReportTriggerMessage;
-use App\Message\ReportMessage;
+use App\Message\GenerateUserReportMessage;
 
 #[AsMessageHandler]
 class WeeklyReportTriggerMessageHandler
@@ -40,11 +40,11 @@ class WeeklyReportTriggerMessageHandler
                 $utcStart = (clone $localStart)->setTimezone(new \DateTimeZone('UTC'));
                 $utcEnd = (clone $localEnd)->setTimezone(new \DateTimeZone('UTC'));
 
-                $this->bus->dispatch(new ReportMessage(
+                $this->bus->dispatch(new GenerateUserReportMessage(
                     $user->getId(),
                     $utcStart,
                     $utcEnd,
-                    ReportMessage::TYPE_WEEKLY
+                    GenerateUserReportMessage::TYPE_WEEKLY
                 ));
 
                 $this->logger->info(
