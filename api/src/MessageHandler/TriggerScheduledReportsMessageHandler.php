@@ -7,10 +7,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Psr\Log\LoggerInterface;
 use App\Entity\User;
-use App\Message\TriggerScheduledReportsMessage;
+use App\Message\TriggerDailyReportsMessage;
+use App\Message\TriggerWeeklyReportsMessage;
 use App\Message\GenerateUserReportMessage;
 
-#[AsMessageHandler]
 class TriggerScheduledReportsMessageHandler
 {
     public function __construct(
@@ -19,16 +19,8 @@ class TriggerScheduledReportsMessageHandler
         private LoggerInterface $logger,
     ) {}
 
-    public function __invoke(TriggerScheduledReportsMessage $message): void
-    {
-        if ($message->getTriggerType() == TriggerScheduledReportsMessage::TYPE_DAILY) {
-            $this->generateDailyReports();
-        } else if ($message->getTriggerType() == TriggerScheduledReportsMessage::TYPE_WEEKLY) {
-            $this->generateWeeklyReports();
-        }
-    }
 
-    public function generateDailyReports(MessageBusInterface $bus): void {
+    public function handleDailyReportsMessage(TriggerDailyReportsMessage $message): void {
         $this->logger->info('Daily report scheduler triggered');
 
         try {
@@ -84,7 +76,7 @@ class TriggerScheduledReportsMessageHandler
         }
     }
 
-    public function generateWeeklyReports(MessageBusInterface $bus): void
+    public function handleWeeklyReportsMessage(TriggerWeeklyReportsMessage $message): void
     {
         $this->logger->info('Weekly report scheduler triggered');
 
@@ -132,6 +124,4 @@ class TriggerScheduledReportsMessageHandler
             throw $e;
         }
     }
-
-
 }

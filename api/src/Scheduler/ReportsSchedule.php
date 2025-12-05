@@ -2,7 +2,8 @@
 
 namespace App\Scheduler;
 
-use App\Message\TriggerScheduledReportsMessage;
+use App\Message\TriggerDailyReportsMessage;
+use App\Message\TriggerWeeklyReportsMessage;
 use Symfony\Component\Scheduler\Attribute\AsSchedule;
 use Symfony\Component\Scheduler\RecurringMessage;
 use Symfony\Component\Scheduler\Schedule;
@@ -20,9 +21,9 @@ final class ReportsSchedule implements ScheduleProviderInterface
     public function getSchedule(): Schedule
     {
         return (new Schedule())
-            ->add(RecurringMessage::cron('0/5 * * * *', new TriggerScheduledReportsMessage(TriggerScheduledReportsMessage::TYPE_WEEKLY)))
-            ->add(RecurringMessage::cron('0 0 * * 0', new TriggerScheduledReportsMessage(TriggerScheduledReportsMessage::TYPE_WEEKLY)))
-            ->add(RecurringMessage::cron('*/2 * * * *', new TriggerScheduledReportsMessage(TriggerScheduledReportsMessage::TYPE_DAILY)))
+            ->add(RecurringMessage::cron('*/5 * * * *', new TriggerWeeklyReportsMessage()))
+            ->add(RecurringMessage::cron('0 0 * * 0', new TriggerWeeklyReportsMessage()))
+            ->add(RecurringMessage::cron('*/2 * * * *', new TriggerDailyReportsMessage()))
             ->stateful($this->cache)
         ;
     }

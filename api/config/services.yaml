@@ -34,3 +34,8 @@ services:
                 credentials:
                     key: '%env(AWS_ACCESS_KEY_ID)%'
                     secret: '%env(AWS_SECRET_ACCESS_KEY)%'
+
+    App\MessageHandler\TriggerScheduledReportsMessageHandler:
+        tags:
+            - { name: messenger.message_handler, handles: App\Message\TriggerDailyReportsMessage, method: handleDailyReportsMessage }
+            - { name: messenger.message_handler, handles: App\Message\TriggerWeeklyReportsMessage, method: handleWeeklyReportsMessage }
