@@ -21,9 +21,10 @@ final class ReportsSchedule implements ScheduleProviderInterface
     public function getSchedule(): Schedule
     {
         return (new Schedule())
-            ->add(RecurringMessage::cron('*/5 * * * *', new TriggerWeeklyReportsMessage()))
-            ->add(RecurringMessage::cron('0 0 * * 0', new TriggerWeeklyReportsMessage()))
-            ->add(RecurringMessage::cron('*/2 * * * *', new TriggerDailyReportsMessage()))
+            ->add(RecurringMessage::cron('0 0 * * 0', new TriggerWeeklyReportsMessage())) // weekly at 12 am
+            ->add(RecurringMessage::cron('0 0 * * *', new TriggerDailyReportsMessage())) // daily at 12 am
+            //->add(RecurringMessage::cron('*/2 * * * *', new TriggerDailyReportsMessage()))
+            //->add(RecurringMessage::cron('*/5 * * * *', new TriggerWeeklyReportsMessage()))
             ->stateful($this->cache)
         ;
     }
